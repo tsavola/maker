@@ -71,7 +71,8 @@ $(CHECK_TARGETS): $(TESTS)
 
 $(INSTALL_TARGETS): $(INSTALL)
 	$(QUIET) $(MAKE) --no-print-directory \
-		-f $(wildcard $(patsubst install-%,%,$@)/T*t.mk) install
+		-f $(firstword $(wildcard $(patsubst install-%,%,$@)/*.mk)) \
+		install
 
 .PHONY: build install all check clean
 .PHONY: $(TARGETS) $(CHECK_TARGETS) $(INSTALL_TARGETS) $(LIBRARIES)
