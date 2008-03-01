@@ -55,10 +55,10 @@ clean:
 	$(QUIET) rm -rf "$(O)"
 
 $(BINARIES):
-	$(QUIET) $(MAKE) --no-print-directory $@/Binary.mk build
+	$(QUIET) $(MAKE) --no-print-directory -f $@/Binary.mk build
 
 $(TESTS):
-	$(QUIET) $(MAKE) --no-print-directory $@/Test.mk build
+	$(QUIET) $(MAKE) --no-print-directory -f $@/Test.mk build
 
 $(LIBRARY_TARGETS):
 	$(QUIET) $(MAKE) --no-print-directory \
