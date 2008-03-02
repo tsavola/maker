@@ -21,7 +21,8 @@ OBJECTS		:= $(OBJECTS:%.$(CXXSUFFIX)=$(O)/obj/%.o)
 PIC_OBJECTS	:= $(PIC_OBJECTS:%.$(CXXSUFFIX)=$(O)/obj/%.os)
 endif
 
-GENERICFLAGS	:= $(CPPFLAGS) $(CFLAGS) -c -MD
+CONFIGFLAGS	:= $(if $(CONFIG),-include $(CONFIG),)
+GENERICFLAGS	:= $(CPPFLAGS) $(CONFIGFLAGS) $(CFLAGS) -c -MD
 CCCOMMAND	:= $(CC)  $(GENERICFLAGS) $(CCFLAGS)
 CXXCOMMAND	:= $(CXX) $(GENERICFLAGS) $(CXXFLAGS)
 PICFLAGS	:= -DPIC -fPIC
@@ -66,5 +67,7 @@ $(O)/obj/%.os: %.$(CXXSUFFIX)
 		$*.$(CXXSUFFIX)
 
 endif
+
+$(OBJECTS) $(PIC_OBJECTS): $(CONFIG)
 
 -include $(SOURCES:%=$(O)/obj/%.d)
