@@ -4,6 +4,8 @@ endef
 
 QUIET		:= $(if $(V),,@)
 
+lastword	= $(word $(words $(1)),$(1))
+
 DEST_PREFIX	= $(DESTDIR)$(PREFIX)
 DEST_BINDIR	= $(DESTDIR)$(BINDIR)
 DEST_SBINDIR	= $(DESTDIR)$(SBINDIR)

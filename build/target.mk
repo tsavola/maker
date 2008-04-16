@@ -10,7 +10,7 @@ OBJECTS		:= $(SOURCES:%.c=$(O)/obj/%.o)
 PIC_OBJECTS	:= $(SOURCES:%.c=$(O)/obj/%.os)
 
 CXXPATTERNS	:= %.cc %.cp %.cxx %.cpp %.CPP %.c++ %.C
-CXXSUFFIX	:= $(lastword $(subst ., ,$(filter $(CXXPATTERNS),$(SOURCES))))
+CXXSUFFIX	:= $(call lastword,$(subst ., ,$(filter $(CXXPATTERNS),$(SOURCES))))
 
 ifeq ($(CXXSUFFIX),)
 LINKCOMMAND	:= $(CCLINKER)  $(CFLAGS) $(CCFLAGS)  $(LDFLAGS)

@@ -64,7 +64,7 @@ $(TESTS):
 $(LIBRARY_TARGETS):
 	$(QUIET) $(MAKE) --no-print-directory \
 		-f $(firstword $(subst -, ,$@))/Library.mk \
-		build-$(lastword $(subst -, ,$@))
+		build-$(call lastword,$(subst -, ,$@))
 
 $(CHECK_TARGETS): $(TESTS)
 	$(QUIET) $(MAKE) --no-print-directory \
