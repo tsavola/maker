@@ -12,7 +12,6 @@ O_ARCHIVE	:= $(O)/lib/$(ARCHIVE)
 build: build-shared build-static
 build-shared: $(O_LIBRARY)
 build-static: $(O_ARCHIVE)
-install: install-shared install-static
 
 $(O_LIBRARY): $(PIC_OBJECTS) $(DEPENDS)
 	$(call echo,Link,$@)
@@ -26,17 +25,17 @@ $(O_ARCHIVE): $(OBJECTS)
 	$(QUIET) mkdir -p $(dir $@)
 	$(QUIET) $(AR) crs $@ $(OBJECTS)
 
-install-shared:
+install::
 ifneq ($(wildcard $(O_LIBRARY)),)
 	mkdir -p $(DEST_LIBDIR)
 	install $(O_LIBRARY) $(DEST_LIBDIR)/
 	ln -sf $(LIBRARY) $(DEST_LIBDIR)/$(LIBRARY_LINK)
 endif
 
-install-static:
+install::
 ifneq ($(wildcard $(O_ARCHIVE)),)
 	mkdir -p $(DEST_LIBDIR)
 	install $(O_ARCHIVE) $(DEST_LIBDIR)/
 endif
 
-.PHONY: build build-shared build-static install install-static install-shared
+.PHONY: build build-shared build-static

@@ -10,8 +10,8 @@ $(O_NAME): $(OBJECTS) $(DEPENDS)
 	$(QUIET) mkdir -p $(dir $@)
 	$(QUIET) $(LINKCOMMAND) -o $@ $(OBJECTS) $(LIBS)
 
-install:
+install::
 	mkdir -p $(DEST_BINDIR)
 	install $(O_NAME) $(DEST_BINDIR)/
 
-.PHONY: build install
+.PHONY: build

@@ -11,8 +11,8 @@ $(O_PLUGIN): $(PIC_OBJECTS) $(DEPENDS)
 	$(QUIET) mkdir -p $(dir $@)
 	$(QUIET) $(LINKCOMMAND) -fPIC -shared -o $@ $(PIC_OBJECTS) $(LIBS)
 
-install:
+install::
 	mkdir -p $(DEST_PLUGINDIR)
 	install $(O_PLUGIN) $(DEST_PLUGINDIR)/
 
-.PHONY: build install
+.PHONY: build
