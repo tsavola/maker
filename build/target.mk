@@ -1,3 +1,5 @@
+-include build/pkgconfig.mk
+
 CROSS_COMPILE	:= 
 CCACHE		:= $(if $(shell which ccache),ccache,)
 CC		:= $(CCACHE) $(CROSS_COMPILE)gcc
