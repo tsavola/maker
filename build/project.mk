@@ -1,5 +1,5 @@
-O		:= debug
-V		:= 
+O		?= debug
+V		?= 
 
 include build/common.mk
 
