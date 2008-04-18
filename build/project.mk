@@ -26,55 +26,42 @@ export O V
 export PREFIX BINDIR SBINDIR LIBDIR PLUGINDIR DATADIR SYSCONFDIR
 export DESTDIR
 
-ifeq ($(BINARIES),)
-BINARIES	:= $(patsubst %/Binary.mk,%,$(wildcard */Binary.mk))
+ifeq ($(DIST),)
+DIST		:= $(BINARIES) $(LIBRARIES) $(PLUGINS)
 endif
-
-ifeq ($(LIBRARIES),)
-LIBRARIES	:= $(patsubst %/Library.mk,%,$(wildcard */Library.mk))
-endif
-
-ifeq ($(TESTS),)
-TESTS		:= $(patsubst %/Test.mk,%,$(wildcard */Test.mk))
-endif
-
-ifeq ($(INSTALL),)
-INSTALL		:= $(BINARIES) $(LIBRARIES)
-endif
+DIST		:= $(filter-out $(NODIST),$(DIST))
 
 LIBRARY_TARGETS	:= $(foreach L,$(LIBRARIES),$(L)-shared $(L)-static)
-TARGETS		:= $(BINARIES) $(TESTS) $(LIBRARY_TARGETS)
+TARGETS		:= $(BINARIES) $(TESTS) $(LIBRARY_TARGETS) $(PLUGINS)
 CHECK_TARGETS	:= $(foreach T,$(TESTS),check-$(T))
-INSTALL_TARGETS	:= $(foreach I,$(INSTALL),install-$(I))
+INSTALL_TARGETS	:= $(foreach I,$(DIST),install-$(I))
 
 build:
-all: $(TARGETS)
 check: $(CHECK_TARGETS)
+all: build check
 install: $(INSTALL_TARGETS)
 
 clean:
 	$(call echo,Remove,$(O))
 	$(QUIET) rm -rf "$(O)"
 
-$(BINARIES):
-	$(QUIET) $(MAKE) --no-print-directory -f $@/Binary.mk build
+makefile	= $(firstword $(wildcard $(1).mk) $(1)/build.mk)
+librarymakefile	= $(call makefile,$(firstword $(subst -, ,$(1))))
+librarytarget	= build-$(call lastword,$(subst -, ,$(1)))
+testmakefile	= $(call makefile,$(patsubst check-%,%,$(1)))
+distmakefile	= $(call makefile,$(patsubst install-%,%,$(1)))
 
-$(TESTS):
-	$(QUIET) $(MAKE) --no-print-directory -f $@/Test.mk build
+$(BINARIES) $(TESTS) $(PLUGINS):
+	$(QUIET) $(MAKE) --no-print-directory -f $(call makefile,$@) build
 
 $(LIBRARY_TARGETS):
-	$(QUIET) $(MAKE) --no-print-directory \
-		-f $(firstword $(subst -, ,$@))/Library.mk \
-		build-$(call lastword,$(subst -, ,$@))
+	$(QUIET) $(MAKE) --no-print-directory -f $(call librarymakefile,$@) $(call librarytarget,$@)
 
 $(CHECK_TARGETS): $(TESTS)
-	$(QUIET) $(MAKE) --no-print-directory \
-		-f $(patsubst check-%,%,$@)/Test.mk check
+	$(QUIET) $(MAKE) --no-print-directory -f $(call testmakefile,$@) check
 
-$(INSTALL_TARGETS): $(INSTALL)
-	$(QUIET) $(MAKE) --no-print-directory \
-		-f $(firstword $(wildcard $(patsubst install-%,%,$@)/*.mk)) \
-		install
+$(INSTALL_TARGETS): $(DIST)
+	$(QUIET) $(MAKE) --no-print-directory -f $(call distmakefile,$@) install
 
 .PHONY: build install all check clean
 .PHONY: $(TARGETS) $(CHECK_TARGETS) $(INSTALL_TARGETS) $(LIBRARIES)
