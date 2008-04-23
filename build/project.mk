@@ -47,7 +47,7 @@ clean:
 	$(QUIET) rm -rf "$(O)"
 
 makefile	= $(firstword $(wildcard $(1).mk) $(1)/build.mk)
-librarymakefile	= $(call makefile,$(firstword $(subst -, ,$(1))))
+librarymakefile	= $(call makefile,$(patsubst %-static,%,$(patsubst %-shared,%,$(1))))
 librarytarget	= build-$(call lastword,$(subst -, ,$(1)))
 testmakefile	= $(call makefile,$(patsubst check-%,%,$(1)))
 distmakefile	= $(call makefile,$(patsubst install-%,%,$(1)))
