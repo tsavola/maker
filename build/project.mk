@@ -1,19 +1,30 @@
 O		?= debug
-V		?= 
+# V
 
 # CONFIG
 
 # CROSS_COMPILE
 CCACHE		?= $(if $(shell which ccache),ccache,)
-CC		?= $(CCACHE) $(CROSS_COMPILE)gcc
-CXX		?= $(CCACHE) $(CROSS_COMPILE)g++
+
+ifeq ($(origin CC),default)
+CC		:= $(CCACHE) $(CROSS_COMPILE)gcc
+endif
+
+ifeq ($(origin CXX),default)
+CXX		:= $(CCACHE) $(CROSS_COMPILE)g++
+endif
+
+ifeq ($(origin AR),default)
+AR		:= $(CCACHE) $(CROSS_COMPILE)ar
+endif
+
 CCLINKER	?= $(CC)
 CXXLINKER	?= $(CXX)
-AR		?= $(CCACHE) $(CROSS_COMPILE)ar
 
 PKG_CONFIG	?= pkg-config
 # PKG_CONFIG_PATH
 
+# CPPFLAGS
 # CFLAGS
 # CCFLAGS
 # CXXFLAGS
@@ -30,7 +41,7 @@ PLUGINDIR	?= $(LIBDIR)
 DATADIR		?= $(PREFIX)/share
 SYSCONFDIR	?= /etc
 
-DESTDIR		?= 
+# DESTDIR
 
 include build/common.mk
 
@@ -42,7 +53,7 @@ endif
 
 export O V
 export CONFIG
-export CROSS_COMPILE CCACHE CC CXX CCLINKER CXXLINKER AR
+export CC CXX CCLINKER CXXLINKER AR
 export PKG_CONFIG PKG_CONFIG_PATH
 export CPPFLAGS CFLAGS CCFLAGS CXXFLAGS LDFLAGS LIBS
 export CXXPATTERNS
