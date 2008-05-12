@@ -1,5 +1,3 @@
-PKG_CONFIG	:= pkg-config
-
 ifneq ($(PKGS),)
 
  ifeq ($(shell $(PKG_CONFIG) --exists --print-errors $(PKGS) && echo ok),)

@@ -1,17 +1,8 @@
 -include build/pkgconfig.mk
 
-CROSS_COMPILE	:= 
-CCACHE		:= $(if $(shell which ccache),ccache,)
-CC		:= $(CCACHE) $(CROSS_COMPILE)gcc
-CXX		:= $(CCACHE) $(CROSS_COMPILE)g++
-CCLINKER	:= $(CC)
-CXXLINKER	:= $(CXX)
-AR		:= $(CCACHE) $(CROSS_COMPILE)ar
-
 OBJECTS		:= $(SOURCES:%.c=$(O)/obj/%.o)
 PIC_OBJECTS	:= $(SOURCES:%.c=$(O)/obj/%.os)
 
-CXXPATTERNS	:= %.cc %.cp %.cxx %.cpp %.CPP %.c++ %.C
 CXXSUFFIX	:= $(call lastword,$(subst ., ,$(filter $(CXXPATTERNS),$(SOURCES))))
 
 ifeq ($(CXXSUFFIX),)
