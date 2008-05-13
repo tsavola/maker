@@ -1,0 +1,1 @@
+CONFIG		:= debug.h
