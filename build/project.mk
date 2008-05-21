@@ -74,8 +74,9 @@ all: build check
 install: $(INSTALL_TARGETS)
 
 clean:
+	$(QUIET) test "$(PWD)" && readlink -f "$(O)" | grep -q "^$(PWD)/."
 	$(call echo,Remove,$(O))
-	$(QUIET) rm -rf "$(O)"
+	$(QUIET) if [ -d "$(O)" ]; then rm -r "$(O)"; fi
 
 makefile	= $(firstword $(wildcard $(1).mk) $(1)/build.mk)
 librarymakefile	= $(call makefile,$(patsubst %-static,%,$(patsubst %-shared,%,$(1))))
