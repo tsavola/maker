@@ -43,6 +43,8 @@ SYSCONFDIR	?= /etc
 
 # DESTDIR
 
+# LD_LIBRARY_PATH
+
 include build/common.mk
 
 ifneq ($(wildcard $(O)/config.mk),)
@@ -59,6 +61,7 @@ export CPPFLAGS CFLAGS CCFLAGS CXXFLAGS LDFLAGS LIBS
 export CXXPATTERNS
 export PREFIX BINDIR SBINDIR LIBDIR PLUGINDIR DATADIR SYSCONFDIR
 export DESTDIR
+export TEST_LIBRARY_PATH := $(LD_LIBRARY_PATH)
 
 DIST		?= $(BINARIES) $(LIBRARIES) $(PLUGINS)
 DO_DIST		:= $(filter-out $(NODIST),$(DIST))
