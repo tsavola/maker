@@ -1,7 +1,7 @@
 include build/common.mk
 include build/target.mk
 
-LIBRARY		:= lib$(NAME).so.$(VERSION)
+LIBRARY		:= lib$(NAME).so$(if $(VERSION),.$(VERSION),)
 LIBRARY_LINK	:= lib$(NAME).so
 ARCHIVE		:= lib$(NAME).a
 
@@ -18,7 +18,9 @@ $(O_LIBRARY): $(PIC_OBJECTS) $(DEPENDS)
 	$(QUIET) mkdir -p $(dir $@)
 	$(QUIET) $(LINKCOMMAND) -fPIC -shared -Wl,-soname,$(LIBRARY) \
 		-o $@ $(PIC_OBJECTS) $(LIBS)
+ifneq ($(LIBRARY),$(LIBRARY_LINK))
 	$(QUIET) ln -sf $(LIBRARY) $(O_LIBRARY_LINK)
+endif
 
 $(O_ARCHIVE): $(OBJECTS)
 	$(call echo,Archive,$@)
