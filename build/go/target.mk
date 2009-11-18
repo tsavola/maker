@@ -10,4 +10,4 @@ $(OBJECTS): $(SOURCES)
 	$(QUIET) mkdir -p $(dir $@)
 	$(QUIET) $(COMPILE) $(COMPILEFLAGS) -o $@ $(SOURCES)
 
-$(OBJECTS): $(CONFIG)
+$(OBJECTS): $(CONFIG) $(DEPENDS)
