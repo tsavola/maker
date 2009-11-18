@@ -1,12 +1,13 @@
 OBJECTTYPE	:= 6
+
 COMPILE		:= $(OBJECTTYPE)g
-LINK		:= $(OBJECTTYPE)l
+COMPILEFLAGS	:= $(foreach DIR,$(PKGDIRS),-I $(DIR))
 
-OBJECTS		:= $(patsubst %,$(O)/obj/%.$(OBJECTTYPE),$(basename $(SOURCES)))
+OBJECTS		:= $(O)/obj/$(NAME).$(OBJECTTYPE)
 
-$(O)/obj/%.$(OBJECTTYPE): %.go
+$(OBJECTS): $(SOURCES)
 	$(call echo,Compile,$@)
 	$(QUIET) mkdir -p $(dir $@)
-	$(QUIET) $(COMPILE) -o $@ $*.go
+	$(QUIET) $(COMPILE) $(COMPILEFLAGS) -o $@ $(SOURCES)
 
 $(OBJECTS): $(CONFIG)
