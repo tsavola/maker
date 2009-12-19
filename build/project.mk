@@ -4,7 +4,7 @@ O		?= debug
 # CONFIG
 
 # CROSS_COMPILE
-CCACHE		?= $(if $(shell which ccache),ccache,)
+CCACHE		?= $(if $(shell which ccache 2>/dev/null),ccache,)
 
 ifeq ($(origin CC),default)
 CC		:= $(CCACHE) $(CROSS_COMPILE)gcc
