@@ -77,7 +77,7 @@ all: build check
 install: $(INSTALL_TARGETS)
 
 clean:
-	$(QUIET) test "$(PWD)" && readlink -f "$(O)" | grep -q "^$(PWD)/."
+	$(QUIET) test "$(PWD)" && readlink -f "$(O)" | grep -q "^$(shell readlink -f '$(PWD)')/."
 	$(call echo,Remove,$(O))
 	$(QUIET) if [ -d "$(O)" ]; then rm -r "$(O)"; fi
 
