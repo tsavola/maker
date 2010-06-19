@@ -63,11 +63,11 @@ export PREFIX BINDIR SBINDIR LIBDIR PLUGINDIR DATADIR SYSCONFDIR
 export DESTDIR
 export TEST_LIBRARY_PATH := $(LD_LIBRARY_PATH)
 
-DIST		?= $(BINARIES) $(LIBRARIES) $(PLUGINS)
+DIST		?= $(BINARIES) $(LIBRARIES) $(PLUGINS) $(OTHERS)
 DO_DIST		:= $(filter-out $(NODIST),$(DIST))
 
 LIBRARY_TARGETS	:= $(foreach L,$(LIBRARIES),$(L)-shared $(L)-static)
-TARGETS		:= $(BINARIES) $(TESTS) $(LIBRARY_TARGETS) $(PLUGINS)
+TARGETS		:= $(BINARIES) $(TESTS) $(LIBRARY_TARGETS) $(PLUGINS) $(OTHERS)
 CHECK_TARGETS	:= $(foreach T,$(TESTS),check-$(T))
 INSTALL_TARGETS	:= $(foreach I,$(DO_DIST),install-$(I))
 
@@ -87,7 +87,7 @@ librarytarget	= build-$(call lastword,$(subst -, ,$(1)))
 testmakefile	= $(call makefile,$(patsubst check-%,%,$(1)))
 distmakefile	= $(call makefile,$(patsubst install-%,%,$(1)))
 
-$(BINARIES) $(TESTS) $(PLUGINS):
+$(BINARIES) $(TESTS) $(PLUGINS) $(OTHERS):
 	$(QUIET) $(MAKE) --no-print-directory -f $(call makefile,$@) build
 
 $(LIBRARY_TARGETS):
