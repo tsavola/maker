@@ -72,8 +72,8 @@ CHECK_TARGETS	:= $(foreach T,$(TESTS),check-$(T))
 INSTALL_TARGETS	:= $(foreach I,$(DO_DIST),install-$(I))
 
 build:
+all: $(DO_DIST) check
 check: $(CHECK_TARGETS)
-all: build check
 install: $(INSTALL_TARGETS)
 
 clean:
