@@ -66,7 +66,7 @@ export TEST_LIBRARY_PATH := $(LD_LIBRARY_PATH)
 DIST		?= $(BINARIES) $(LIBRARIES) $(PLUGINS) $(OTHERS)
 DO_DIST		:= $(filter-out $(NODIST),$(DIST))
 
-LIBRARY_TARGETS	:= $(foreach L,$(LIBRARIES),$(L)-shared $(L)-static)
+LIBRARY_TARGETS	:= $(foreach L,$(LIBRARIES),$(L)-shared $(L)-static $(L)-reloc)
 TARGETS		:= $(BINARIES) $(TESTS) $(LIBRARY_TARGETS) $(PLUGINS) $(OTHERS)
 CHECK_TARGETS	:= $(foreach T,$(TESTS),check-$(T))
 INSTALL_TARGETS	:= $(foreach I,$(DO_DIST),install-$(I))
@@ -82,7 +82,7 @@ clean:
 	$(QUIET) if [ -d "$(O)" ]; then rm -r "$(O)"; fi
 
 makefile	= $(firstword $(wildcard $(1).mk) $(1)/build.mk)
-librarymakefile	= $(call makefile,$(patsubst %-static,%,$(patsubst %-shared,%,$(1))))
+librarymakefile	= $(call makefile,$(patsubst %-reloc,%,$(patsubst %-static,%,$(patsubst %-shared,%,$(1)))))
 librarytarget	= build-$(call lastword,$(subst -, ,$(1)))
 testmakefile	= $(call makefile,$(patsubst check-%,%,$(1)))
 distmakefile	= $(call makefile,$(patsubst install-%,%,$(1)))
