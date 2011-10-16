@@ -8,7 +8,7 @@ build: $(O_NAME)
 $(O_NAME): $(OBJECTS) $(DEPENDS)
 	$(call echo,Link,$@)
 	$(QUIET) mkdir -p $(dir $@)
-	$(QUIET) $(LINKCOMMAND) -o $@ $(OBJECTS) $(LIBS)
+	$(QUIET) + $(LINKCOMMAND) -o $@ $(OBJECTS) $(LIBS)
 
 install::
 	mkdir -p $(DEST_BINDIR)

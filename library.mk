@@ -19,7 +19,7 @@ build-reloc: $(O_PIC_ARCHIVE)
 $(O_LIBRARY): $(PIC_OBJECTS) $(DEPENDS)
 	$(call echo,Link,$@)
 	$(QUIET) mkdir -p $(dir $@)
-	$(QUIET) $(LINKCOMMAND) -fPIC -shared -Wl,-soname,$(LIBRARY) \
+	$(QUIET) + $(LINKCOMMAND) -fPIC -shared -Wl,-soname,$(LIBRARY) \
 		-o $@ $(PIC_OBJECTS) $(LIBS)
 ifneq ($(LIBRARY),$(LIBRARY_LINK))
 	$(QUIET) ln -sf $(LIBRARY) $(O_LIBRARY_LINK)

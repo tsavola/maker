@@ -9,7 +9,7 @@ build: $(O_PLUGIN)
 $(O_PLUGIN): $(PIC_OBJECTS) $(DEPENDS)
 	$(call echo,Link,$@)
 	$(QUIET) mkdir -p $(dir $@)
-	$(QUIET) $(LINKCOMMAND) -fPIC -shared -o $@ $(PIC_OBJECTS) $(LIBS)
+	$(QUIET) + $(LINKCOMMAND) -fPIC -shared -o $@ $(PIC_OBJECTS) $(LIBS)
 
 install::
 	mkdir -p $(DEST_PLUGINDIR)
