@@ -11,6 +11,10 @@ PICFLAGS	:= -DPIC -fPIC
 -include build/c.mk
 -include build/c++.mk
 
+ifneq ($(PREPARE_POST),)
+include build/c++-prepare.mk
+endif
+
 OBJECTS		:= $(patsubst %,$(O)/obj/%.o,$(basename $(SOURCES)))
 PIC_OBJECTS	:= $(patsubst %,$(O)/obj/%.os,$(basename $(SOURCES)))
 
