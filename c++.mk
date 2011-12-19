@@ -1,7 +1,9 @@
 CXXCOMMAND	:= $(CXX) $(GENERICFLAGS) $(CXXFLAGS)
 CXXLINKCOMMAND	:= $(CXXLINKER) $(CFLAGS) $(CXXFLAGS) $(LDFLAGS)
 
+ifeq ($(CXXSUFFIX),)
 CXXSUFFIX	:= $(firstword $(suffix $(filter $(CXXPATTERNS),$(SOURCES))))
+endif
 
 ifneq ($(CXXSUFFIX),)
 
